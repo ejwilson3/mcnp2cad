@@ -17,7 +17,7 @@ Compiling (with CGM):
 
 At present CGM_BASE_DIR must be specifed as a make paramter, e.g.
 ::
-   make CGM_BASE_DIR=<path to CGM>
+    make CGM_BASE_DIR=<path to CGM>
 
 CGM_BASE_DIR must point to a valid installation of the CGM library.  Information and instructions
 for getting and using CGM are available at https://trac.mcs.anl.gov/projects/ITAPS/wiki/CGM
@@ -60,9 +60,6 @@ Unsupported Features:
      hexgons
    * Support for ``ELL`` (ellipse), ``WED`` (wedge), and ``ARB`` (arbitrary polyhedron) 
      macrobodies
-   * Ability to refer to individual facets of macrobodies as surfaces in cell
-     specification, using the ``NNNN.MM`` syntax.  Parsing support for this feature
-     exists, but output support does not.
    * Support for lattices in universe 0
    * Faster/more efficient generation of embedded universes within lattices.
    * Complete support for ``M=-1`` argument in ``TRn`` (transform) cards.
