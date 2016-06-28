@@ -51,6 +51,8 @@ static void strlower( std::string& str ){
 
 static int mnemToNumFacets( std::string mnemonic ){
   //The number of facets of each macrobody.  Returns 0 if not in the facetKey.
+
+static int mnemToNumFacets( std::string mnemonic ){
   std::map<std::string, int> facetKey;
   facetKey["hex"] = 8;
   facetKey["rhp"] = 8;
