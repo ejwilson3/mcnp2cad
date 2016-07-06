@@ -412,7 +412,7 @@ void GeometryContext::tagGroups( ){
                 << " to length " << name_tag_maxlength << std::endl;
     }
 
-    iGeom_setEntSetData( igm, set, name_tag, name.c_str(),/* name.length(),AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/ &igm_result );
+    iGeom_setEntSetData( igm, set, name_tag, name.c_str(), &igm_result );
     CHECK_IGEOM( igm_result, "Naming a material group's EntitySet" );
     
   }
@@ -450,7 +450,7 @@ void GeometryContext::tagCellIDsAsEntNames(){
 
     if( entity == NULL ){ std::cerr << "Error: NULL in named_cells" << std::endl; continue; }
     
-    iGeom_setData( igm, entity, name_tag, name.c_str(),/* name.length(),AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/ &igm_result );
+    iGeom_setData( igm, entity, name_tag, name.c_str(), &igm_result );
     CHECK_IGEOM( igm_result, "Naming an NamedEntity" );
   }
 

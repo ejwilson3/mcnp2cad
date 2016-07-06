@@ -245,7 +245,7 @@ iBase_ErrorType CGMTagManager::set_csa_tag(RefEntity *this_ent,
     strncpy(this_data.stringData+i*this_data.indivStringSize, sd->get_and_step()->c_str(),
             this_data.indivStringSize);
 
-  result = setArrData(&this_ent, 1, tag_handle, (const char*)&this_data_ptr/*, sizeof(CSATagData)AAAAAAAAAAAAAAAAAAAAAAAAAAAAa*/);
+  result = setArrData(&this_ent, 1, tag_handle, (const char*)&this_data_ptr);
   
   return result;
 }
@@ -548,8 +548,7 @@ iBase_ErrorType CGMTagManager::setPresetTagData(RefEntity *entity,
   return iBase_TAG_NOT_FOUND;
 }
 
-CubitSimpleAttrib* CGMTagManager::get_simple_attrib(RefEntity* entity
-                                                    /*,const char* nameAAAAAAAAAAAAAAAAAA*/ )
+CubitSimpleAttrib* CGMTagManager::get_simple_attrib(RefEntity* entity)
 {
   TopologyEntity* te_ptr = dynamic_cast<TopologyEntity*>(entity);
   TopologyBridge* tb_ptr = te_ptr ? te_ptr->bridge_manager()->topology_bridge() : 0;
@@ -643,7 +642,7 @@ bool CGMTagManager::getPresetTagData(const RefEntity *entity,
       *(int*)tag_value = val;
       return true;
     case 5: // mesh size
-      csa = get_simple_attrib( const_cast<RefEntity*>(entity)/*, "MESH_INTERVAL"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/ );
+      csa = get_simple_attrib( const_cast<RefEntity*>(entity) );
       if (!csa)
         return false;
       csa->int_data_list()->reset();
@@ -667,7 +666,7 @@ bool CGMTagManager::getPresetTagData(const RefEntity *entity,
       *(double*)tag_value = dval;
       return true;
     case 6: // interval firmness
-      csa = get_simple_attrib( const_cast<RefEntity*>(entity)/*, "MESH_INTERVAL"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/ );
+      csa = get_simple_attrib( const_cast<RefEntity*>(entity) );
       if (!csa)
         return false;
       if (csa->string_data_list()->size() < 2) {
@@ -734,8 +733,7 @@ void CGMTagManager::pc_list(RefEntity *gentity, std::vector<RefGroup*> *&parents
       }
     }
     if (must_set) {
-      result = setArrData(&gentity, 1, pc_tag(), (char*)pc_lists/*, 
-                          2*dum_tag_sizeAAAAAAAAAAAAAAAAAAAAAAAAA*/);
+      result = setArrData(&gentity, 1, pc_tag(), (char*)pc_lists);
       assert(iBase_SUCCESS == result);
     }
   }

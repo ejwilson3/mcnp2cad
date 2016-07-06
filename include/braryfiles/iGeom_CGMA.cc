@@ -47,7 +47,7 @@ const bool debug = false;
 #define ERROR(a, b) do {CGM_iGeom_setLastError((*err = a), b); return; } while(false)
 
 #define ARRAY_IN(b) \
-  b/*, b ## _size AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa*/ 
+  b 
 
 #define ARRAY_INOUT(b) \
   b, b ## _allocated, b ## _size  
@@ -276,20 +276,18 @@ void CGM_iGeom_register()
 
 
 ITAPS_API void
-iGeom_getErrorType(// iGeom_Instance geom,
-                    int *error_type )
+iGeom_getErrorType( int *error_type )
 {
   *error_type = CGM_iGeom_getLastErrorType();
 }
-//AAAA
+
 ITAPS_API void
-iGeom_getDescription(// iGeom_Instance geom,
-                      char* description_buffer,
+iGeom_getDescription( char* description_buffer,
                       int description_buffer_length )
 {
   CGM_iGeom_getLastErrorDesc(description_buffer, description_buffer_length);
 }
-//AAA
+
 ITAPS_API void
 iGeom_newGeom( const char* options,
                iGeom_Instance* instance_out,
@@ -326,7 +324,6 @@ iGeom_newGeom( const char* options,
   RETURN(iBase_SUCCESS);
 }
 
- //AAA
 ITAPS_API void
 iGeom_save( /*in*/ const char *name,
             /*in*/ const char* options,
@@ -397,7 +394,6 @@ iGeom_save( /*in*/ const char *name,
   RETURN(iBase_SUCCESS);
 }
 
-//AAA
 ITAPS_API void
 iGeom_getRootSet( iGeom_Instance,
                   iBase_EntitySetHandle* root,
@@ -407,7 +403,6 @@ iGeom_getRootSet( iGeom_Instance,
   RETURN(iBase_SUCCESS);
 }
 
- //AAA
 ITAPS_API void
 iGeom_getEntities( /*in*/ iBase_EntitySetHandle set_handle,
                    /*in*/ int gentity_type,
@@ -449,7 +444,6 @@ iGeom_getEntities( /*in*/ iBase_EntitySetHandle set_handle,
 
 
 
- //AAA
 ITAPS_API void
 iGeom_getNumOfType( /*in*/ iBase_EntitySetHandle set_handle,
                     /*in*/ int gentity_type,
@@ -491,7 +485,6 @@ iGeom_getNumOfType( /*in*/ iBase_EntitySetHandle set_handle,
   }
 }
 
-//AAA
 /**
  *   Get the size of the data associated with a given tag handle.
  */
@@ -506,7 +499,6 @@ iGeom_getTagSizeBytes( iGeom_Instance instance,
 }
 
 
-//AAA
 /**
  *     Get the tag handle associated with a given string name.
  */
@@ -523,11 +515,10 @@ iGeom_getTagHandle( iGeom_Instance instance,
   *tag_handle = reinterpret_cast<iBase_TagHandle>(static_cast<size_t>(TM->getTagHandle( tag_name )));
 
     // XXX: this seems really wrong...
-  iGeom_getErrorType(/*instance,*/ err);
+  iGeom_getErrorType(err);
 }
 
 
-//AAA
 /**
  *   Allows the user to set the tag data values on an array of gentity
  *   handles
@@ -537,19 +528,17 @@ iGeom_setData( iGeom_Instance instance,
                /*in*/ iBase_EntityHandle entity_handle,
                /*in*/ iBase_TagHandle tag_handle,
                /*in*/ const void *tag_value_tmp,
-               /*int tag_value_size,AAAAAAAAAAAAAAAAAAAAAAA*/
                int* err )
 {
   const char *tag_value = reinterpret_cast<const char *>(tag_value_tmp);
   RefEntity *tmp_entity = ENTITY_HANDLE(entity_handle);
   iBase_ErrorType retval = TM->setArrData(&tmp_entity, 1, 
                                           TAG_HANDLE(tag_handle), 
-                                          ARRAY_IN(tag_value)/*AAAAAAAAAAAAAA*/);
+                                          ARRAY_IN(tag_value));
   RETURN(retval);
 }
 
 
-//AAA
 /**
  *   Set the tag data associated with a given tag handle on the mesh or
  *   gentity_set
@@ -559,19 +548,17 @@ iGeom_setEntSetData( iGeom_Instance instance,
                      /*in*/ iBase_EntitySetHandle entity_set,
                      /*in*/ iBase_TagHandle tag_handle,
                      /*in*/ const void *tag_value_tmp,
-                     /*int tag_value_size,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
                      int* err )
 {
   const char *tag_value = reinterpret_cast<const char *>(tag_value_tmp);
     // have to go through RefEntity* so that RefEntity** gets set right
   RefEntity *tmp_entity = SET_HANDLE(entity_set);
   iBase_ErrorType retval = TM->setArrData(&tmp_entity, 1, TAG_HANDLE(tag_handle), 
-                                          ARRAY_IN(tag_value)/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/);
+                                          ARRAY_IN(tag_value));
   RETURN(retval);
 }
 
 
-//AAA
 ITAPS_API void
 iGeom_setEntSetIntData( iGeom_Instance instance,
                         /*in*/ iBase_EntitySetHandle entity_set,
@@ -580,10 +567,9 @@ iGeom_setEntSetIntData( iGeom_Instance instance,
                         int* err )
 {
   iGeom_setEntSetData(instance, entity_set, tag_handle, 
-                      &tag_value, /*sizeof(int),AAAAAAAAAAAAAAAAAa*/ err);
+                      &tag_value, err);
 }
 
-//AAA
 ITAPS_API void
 iGeom_getEntBoundBox( /*in*/ iBase_EntityHandle entity_handle,
                       /*out*/ double* min_x,
@@ -618,10 +604,8 @@ iGeom_getEntBoundBox( /*in*/ iBase_EntityHandle entity_handle,
  */
 
 
- //AAA
 ITAPS_API void
-iGeom_createEntSet(// /*in*/ int isList,
-                    /*out*/ iBase_EntitySetHandle *entity_set,
+iGeom_createEntSet( /*out*/ iBase_EntitySetHandle *entity_set,
                     int* err )
 {
   RefGroup* grp = RefEntityFactory::instance()->construct_RefGroup();
@@ -635,7 +619,6 @@ iGeom_createEntSet(// /*in*/ int isList,
     RETURN(iBase_SUCCESS);
   }
 }
- //AAA
 
 ITAPS_API void
 iGeom_addEntToSet( /*in*/ iBase_EntityHandle entity_to_add,
@@ -655,7 +638,6 @@ iGeom_addEntToSet( /*in*/ iBase_EntityHandle entity_to_add,
 }
 
 
-//AAA
 ITAPS_API void
 iGeom_copyEnt( /*in*/ iBase_EntityHandle geom_entity,
                /*out*/ iBase_EntityHandle *geom_entity2,
@@ -689,7 +671,6 @@ iGeom_copyEnt( /*in*/ iBase_EntityHandle geom_entity,
   RETURN(iBase_SUCCESS);
 }
 
-//AAA
 ITAPS_API void
 iGeom_deleteEnt( /*in*/ iBase_EntityHandle geom_entity,
                  int* err )
@@ -721,7 +702,6 @@ iGeom_deleteEnt( /*in*/ iBase_EntityHandle geom_entity,
 }
 
 
-//AAA
 ITAPS_API void
 iGeom_createSphere( double radius,
                     iBase_EntityHandle *geom_entity,
@@ -737,7 +717,6 @@ iGeom_createSphere( double radius,
 }
 
 
-//AAA
 ITAPS_API void
 iGeom_createBrick( /*in*/ double x,
                    /*in*/ double y,
@@ -768,7 +747,6 @@ iGeom_createBrick( /*in*/ double x,
   RETURN(iBase_SUCCESS);
 }
           
-          //AAA
 
 ITAPS_API void
 iGeom_createCylinder( /*in*/ double height,
@@ -790,9 +768,6 @@ iGeom_createCylinder( /*in*/ double height,
   RETURN(iBase_SUCCESS);
 }
       
-
-
-      //AAA
 ITAPS_API void
 iGeom_createCone( /*in*/ double height,
                   /*in*/ double major_rad_base,
@@ -814,8 +789,6 @@ iGeom_createCone( /*in*/ double height,
   RETURN(iBase_SUCCESS);
 }
     
-
-    //AAA
 ITAPS_API void
 iGeom_createTorus( /*in*/ double major_rad,
                    /*in*/ double minor_rad,
@@ -836,8 +809,6 @@ iGeom_createTorus( /*in*/ double major_rad,
   RETURN(iBase_SUCCESS);
 }
 
-
-//AAA
 ITAPS_API void
 iGeom_moveEnt( /*inout*/ iBase_EntityHandle geom_entity,
                /*in*/ double x,
@@ -897,8 +868,6 @@ iGeom_moveEnt( /*inout*/ iBase_EntityHandle geom_entity,
 }
 
 
-//AAA
-      
 ITAPS_API void
 iGeom_rotateEnt( /*inout*/ iBase_EntityHandle geom_entity,
                  /*in*/ double angle,
@@ -932,8 +901,6 @@ iGeom_rotateEnt( /*inout*/ iBase_EntityHandle geom_entity,
   ERROR(iBase_INVALID_ENTITY_TYPE, "Wrong type of entity specified for move.");
 }
 
-
-//AAA
 ITAPS_API void
 iGeom_reflectEnt( /*inout*/ iBase_EntityHandle geom_entity,
                   /*in*/ double point_x,
@@ -972,8 +939,6 @@ iGeom_reflectEnt( /*inout*/ iBase_EntityHandle geom_entity,
   ERROR(iBase_INVALID_ENTITY_TYPE, "Wrong type of entity specified for reflect.");
 }
 
-
-//AAA
 ITAPS_API void
 iGeom_scaleEnt( /*inout*/ iBase_EntityHandle geom_entity,
                 /*in*/ double point_x,
@@ -1033,8 +998,6 @@ iGeom_scaleEnt( /*inout*/ iBase_EntityHandle geom_entity,
   RETURN(iBase_SUCCESS);
 }
 
-//AAA
-
 ITAPS_API void
 iGeom_uniteEnts( /*in*/ iBase_EntityHandle const* geom_entities,
                  int geom_entities_size,
@@ -1076,9 +1039,6 @@ iGeom_uniteEnts( /*in*/ iBase_EntityHandle const* geom_entities,
   RETURN(iBase_SUCCESS);
 }
 
-
-
-//AAA
 ITAPS_API void
 iGeom_subtractEnts( /*in*/ iBase_EntityHandle blank,
                     /*in*/ iBase_EntityHandle tool,
@@ -1116,9 +1076,6 @@ iGeom_subtractEnts( /*in*/ iBase_EntityHandle blank,
   RETURN(iBase_SUCCESS);
 }
 
-
-
-//AAA
 ITAPS_API void
 iGeom_intersectEnts( /*in*/ iBase_EntityHandle ent1,
                      /*in*/ iBase_EntityHandle ent2,
@@ -1156,9 +1113,6 @@ iGeom_intersectEnts( /*in*/ iBase_EntityHandle ent1,
   RETURN(iBase_SUCCESS);
 }
 
-
-
-//AAA
 ITAPS_API void
 iGeom_sectionEnt( /*inout*/ iBase_EntityHandle geom_entity,
                   /*in*/ double plane_normal_x,
@@ -1221,8 +1175,6 @@ iGeom_sectionEnt( /*inout*/ iBase_EntityHandle geom_entity,
   RETURN(iBase_SUCCESS);
 }
 
-
-//AAA
 ITAPS_API void
 iGeom_imprintEnts( /*in*/ iBase_EntityHandle const* gentity_handles,
                    int gentity_handles_size,
@@ -1270,9 +1222,6 @@ iGeom_imprintEnts( /*in*/ iBase_EntityHandle const* gentity_handles,
   RETURN(iBase_SUCCESS);
 }
   
-
-
-  //AAA
 ITAPS_API void
 iGeom_mergeEnts( /*in*/ iBase_EntityHandle const* gentity_handles,
                  int gentity_handles_size,
@@ -1598,72 +1547,4 @@ void append_all_ibase_type( int ibase_type,
   
   RETURN(iBase_SUCCESS);
 }
-
-/*AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
-void iGeom_getFacets(iBase_EntityHandle entity,
-                     double dist_tolerance,
-                     double **points, int *points_allocated, int *points_size,
-                     int **facets, int *facets_allocated, int *facets_size,
-                     int *err)
-{
-  GMem gMem;
-  CubitStatus resl = CUBIT_SUCCESS;
-  RefFace *ref_face = dynamic_cast<RefFace*>(ENTITY_HANDLE(entity));
-  if(ref_face)
-    resl = ref_face->get_graphics(gMem,  15, dist_tolerance);
-
-  RefEdge *ref_edge = dynamic_cast<RefEdge*>(ENTITY_HANDLE(entity));
-  if(ref_edge)
-    resl = ref_edge->get_graphics(gMem, dist_tolerance);
-
-  if(resl == CUBIT_FAILURE)
-      ERROR(iBase_FAILURE, "Can't get facets for this entity.");
-
-  if(ref_face || ref_edge)
-  {
-    int p_count = gMem.point_list_size(); 
-    int f_count = gMem.facet_list_size();
-    if(p_count)
-    {
-      ALLOC_CHECK_ARRAY_NOFAIL(points, p_count * 3);
-      GPoint* gpoints = gMem.point_list();
-      double *x, *y, *z;
-      x = *points;
-      y = x + 1;
-      z = x + 2;
-      size_t step = 3;
-      for(int i = 0; i < p_count; i++)
-      {
-        GPoint pt = gpoints[i];       
-        *x = pt.x;
-        *y = pt.y;
-        *z = pt.z;
-        x += step;
-        y += step;
-        z += step; 
-      } 
-    }
-    if(f_count)
-    {
-      //return all the triangles. Current gMem gives 4*triangle facets which
-      //includes a '3' for each facet set to indicate there are 3 nodes on 
-      //the tessilation. Here trying to ignore the '3'.
-      ALLOC_CHECK_ARRAY_NOFAIL(facets, f_count*3/4);
-      int *connectivity;
-      connectivity = *facets;
-      int* list = gMem.facet_list();
-      for (int i = 0; i < f_count/4; i++)
-      {
-         *connectivity = list[i*4 + 1];
-         *(connectivity + 1) = list[i*4 + 2];
-         *(connectivity + 2) = list[i*4 + 3];
-         connectivity += 3;
-      }
-    } 
-    RETURN(iBase_SUCCESS); 
-  }
-  else
-    RETURN(iBase_INVALID_ENTITY_TYPE);
-}
-*/
 

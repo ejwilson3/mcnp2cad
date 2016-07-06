@@ -93,8 +93,7 @@ public:
 
   iBase_ErrorType setArrData (/*in*/ ARRAY_IN_DECL(RefEntity*, entity_handles),
                               /*in*/ const long tag_handle,
-                              /*in*/ const char *tag_values
-                              /*,const int tag_values_sizeAAAAAAAAAAAAAAAAAAAAAAAAAAAa*/);
+                              /*in*/ const char *tag_values);
 
   iBase_ErrorType rmvArrTag (/*in*/ ARRAY_IN_DECL(RefEntity*, entity_handles),
                              /*in*/ const long tag_handle);
@@ -150,7 +149,7 @@ private:
   
   RefGroup *interface_group(const bool create_if_missing = true);
   
-  CubitSimpleAttrib* get_simple_attrib( RefEntity* entity/*, const char* nameAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa*/ );  
+  CubitSimpleAttrib* get_simple_attrib( RefEntity* entity );  
 };
 
 class CATag: public CubitAttrib

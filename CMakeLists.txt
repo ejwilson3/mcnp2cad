@@ -26,7 +26,7 @@ include_directories("${CMAKE_SOURCE_DIR}/include/braryfiles/2exheads")
 include_directories("${CMAKE_SOURCE_DIR}/include/braryfiles/2exheads/layer2")
 include_directories("${CMAKE_SOURCE_DIR}/include/braryfiles/2exheads/layer2/layer3")
 
-add_library(geoman STATIC ../braryfiles/CATag.cpp ../braryfiles/iGeom_CGMA.cc ../braryfiles/iGeomError.cc)
+add_library(geoman STATIC include/braryfiles/CATag.cpp include/braryfiles/iGeom_CGMA.cc include/braryfiles/iGeomError.cc)
 LINK_DIRECTORIES(${IGEOM_LIBRARY_DIR})
 LINK_DIRECTORIES(${CUBIT_LIBRARY_DIR}/bin/)
 LINK_DIRECTORIES(${CMAKE_SOURCE_DIR}/build/)

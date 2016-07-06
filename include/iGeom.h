@@ -544,7 +544,6 @@ though
                             iBase_EntitySetHandle entity_set_handle,
                             const iBase_TagHandle tag_handle,
                             const void* tag_value,
-                           /* const int tag_value_size,AAAAAAAAAAAAAAAAAAAAAA*/
                             int *err );
 
     /**\brief  Set a tag value of arbitrary type on an entity
@@ -568,7 +567,6 @@ though
                       iBase_EntityHandle entity_handle,
                       iBase_TagHandle tag_handle,
                       const void* tag_value,
-                    /*  int tag_value_size,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa*/ 
                       int *err );
 
 
