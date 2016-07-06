@@ -1300,7 +1300,6 @@ void InputDeck::parseSurfaces( LineExtractor& lines ){
     }
     //Create a surface card for each surface
     SurfaceCard* s = new SurfaceCard(*this, token_buffer);
-
     if( OPT_VERBOSE) s->print(std::cout);
 
     this->surfaces.push_back(s);

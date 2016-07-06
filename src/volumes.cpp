@@ -1376,8 +1376,6 @@ SurfaceVolume* FacetSurface( const std::string mnemonic, const std::vector< doub
 
 
 
-
-
 SurfaceVolume* rccFacet( const std::vector< double > args, int facet ){
   if( facet == 1 ){
     //cylinder surface
