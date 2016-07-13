@@ -1,5 +1,3 @@
-#include "iGeomError.h"
-#include "iBase.h"
 #include "iGeom.h"
 #include <string>
 #include <assert.h>
@@ -80,7 +78,6 @@ void CGM_iGeom_getLastErrorDesc(char* description_buffer,
       description_buffer[lastErrorDesc.length()] = '\0';
   }
 }
-
 #ifdef __cplusplus
  } // extern "C"
 #endif

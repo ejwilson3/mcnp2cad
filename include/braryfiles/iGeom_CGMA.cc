@@ -21,9 +21,6 @@
  * 2007-6-15
  */
 #include "InitCGMA.hpp"
-#include "GMem.hpp"
-#include <iostream>
-#include <math.h>
 #include "GeometryQueryTool.hpp"
 #include "CubitCompat.hpp"
 
@@ -90,31 +87,21 @@ const double RAD_TO_DEG = 180.0 / acos(-1.0);
 const double DEG_TO_RAD = 1.0 / RAD_TO_DEG;
 
 #include "CATag.hpp"
-#include "CGMAIterator.hpp"
 #include "iGeomError.h"
 
 #include "RefEntityFactory.hpp"
-#include "BasicTopologyEntity.hpp"
 #include "RefGroup.hpp"
 #include "Body.hpp"
 #include "RefVertex.hpp"
 #include "RefEdge.hpp"
 #include "RefFace.hpp"
-#include "RefVolume.hpp"
-#include "CubitVector.hpp"
 
 #ifdef USE_MPI
 #include "CGMReadParallel.hpp"
 #endif
 
-#include "CGMApp.hpp"
 #include "GeometryModifyTool.hpp"
-#include "Surface.hpp"
-#include "BasicTopologyEntity.hpp"
-#include "CubitFile.hpp"
-#include "CubitDefines.h"
 #include "MergeTool.hpp"
-#include "GeometryDefines.h"
 
 #define gqt GeometryQueryTool::instance()
 #define gmt GeometryModifyTool::instance()
