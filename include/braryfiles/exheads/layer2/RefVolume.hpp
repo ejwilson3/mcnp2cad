@@ -18,6 +18,7 @@
 
 // ********** BEGIN CUBIT INCLUDES         **********
 
+#include "CastTo.hpp"
 #include "BasicTopologyEntity.hpp"
 // ********** END CUBIT INCLUDES           **********
 
