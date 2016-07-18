@@ -14,9 +14,7 @@
 
 #include <fstream>
 
-#include <cstdarg>
 #include "CubitDefines.h"
-#include "CubitUtilConfigure.h"
 
 
 // GCC compiler checking of format arguments
@@ -274,255 +272,22 @@
 #define PRINT_DEBUG(x) if(!DEBUG_FLAG_SET(x));else CubitMessage::instance()->print_debug
 
 class CubitString;
-class CubitMessage;
-
-class CUBIT_UTIL_EXPORT MessageFlag
-{
-  friend class CubitMessage;
-public:
-  ~MessageFlag();
-private:
-  MessageFlag();
-  MessageFlag(int flag_number, const char *desc);
-
-  void output();
-
-    // Member variables
-  int flagNumber;
-  int setting;
-  const char *description;
-  CubitString *filename;
-  std::ofstream *outputStream;
-};
-
-class CubitMessageHandler
-{
-public:
-  CubitMessageHandler() {}
-  virtual ~CubitMessageHandler() {}
-
-  virtual void print_message_prefix(const char *prefix) = 0;
-  virtual void print_message(const char *message) = 0;
-  virtual void print_error_prefix(const char *prefix) = 0;
-  virtual void print_error(const char *message) = 0;
-};
-
+class CubitMessageHandler{};
 class CUBIT_UTIL_EXPORT CubitMessage
 {
-protected:
-
-  static CubitMessage* instance_;
-  //- static pointer to unique instance of this class
-
-  static CubitMessageHandler* mHandler;
-  //- static pointer to the message output handler
-
-  static MessageFlag staticDebugFlag[];
-
-  MessageFlag *debugFlag;
-  //- debug flag, used with internal_error
-
-  static int infoFlag;
-  //- info flag, used with internal_error
-
-  static int warningFlag;
-  //- warning flag, used with internal_error
-
-  static int errorFlag;
-  //- error flag, used with internal_error
-
-  static int diagnosticFlag;
-  //- diagnostic flag, used with internal_error
-
-  int currentDebugFlag;
-
-  static int errorCount;
-  //- static variable to track the errors that occured in the
-  //- a session.  Only gets set when PRINT_ERROR is called.
-
-  static int warningCount;
-  //- static variable to track the warnings that occured in the
-  //- a session.  Only gets set when PRINT_WARNING is called.
-
-  static std::ofstream *loggingStream;
-  static CubitString *loggingFile;
-  //- Stream pointer for logging of internal_error messages.
-  //- If NULL, output goes to terminal only (except for debug)
-  //- If Non-NULL, output goes to both terminal and stream.
-
-  static std::ofstream *loggingErrorStream;
-  static CubitString *loggingErrorFile;
-  //- Stream pointer for logging of only ERROR messages.
-  //- If NULL, ERROR output goes to normal places only
-  //- If Non-NULL, output goes to both this stream, and all other places.
-
-  void add_to_error_count();
-  //- Increments the errorCount variable. Keep private (GDS).
-
-  void add_to_warning_count();
-  //- Increments the errorCount variable. Keep private (GDS).
-  void set_debug_stream(const int index, std::ofstream *output_stream);
-  //- Set the output stream for this debug flag to output_stream.
-
-  void remove_debug_stream(const int index);
-  //- Close and delete the stream if only one use.
-
-  int find_file_use(const CubitString &filename);
-  int count_stream_users(const std::ofstream *stream);
-
-  CubitMessage ();
-    //- Class Constructor. (Not callable by user code. Class is constructed
-    //- by the {instance()} member function.
-
 public:
-
   static CubitMessage* instance();
   //- Controlled access and creation of the sole instance of this class.
 
-  virtual ~CubitMessage();
-  //- Class Destructor.
-
-  static void delete_instance();
-
-  void set_logging_file_setting(const CubitString &filename, CubitBoolean resume_flag = CUBIT_FALSE);
-  void set_debug_file_setting(const int index, const CubitString &filename);
-
-  CubitString logging_filename() const;
-  CubitString logging_errors_filename() const;
-
-  int is_debug_flag_set( int flag );
-  //- for use with the PRINT_DEBUG macro only
-
-  //static int get_debug_for_setting_handler(const int index)
-  //{return staticDebugFlag[index].setting;};
-  // static void set_debug_for_setting_handler(const int index, const int value)
-  //{staticDebugFlag[index].setting = value;};
-  //- for use with SettingHandler.cpp code only
-
-  int  debug_flag(const int index);
-  void debug_flag(const int index, const int flag);
-  int  number_of_debug_flags();
-  //- debug flag, used with internal_error
-
-  virtual void set_debug_flag_gui(bool /* flag */){};
-  virtual int is_debug_flag_gui_set(){return 0;};
-  virtual int print_debug_gui( const char * /* format */, ... ){return 0;};
-  //- write out a debug message (from GUI only)
-  //- used for GUI Debugging (CAT-only)
-
-  static bool get_info_flag();
   static void set_info_flag(bool flag);
   //- info flag, used with internal_error
 
-  static bool get_warning_flag();
   static void set_warning_flag(bool flag);
-  //- warning flag, used with internal_error
-
-  static bool get_error_flag();
-  static void set_error_flag(bool flag);
-  //- error flag, used with internal_error
-
-  static bool get_diagnostic_flag();
-  static void set_diagnostic_flag(bool flag);
-  //- diagnostic flag, used with internal_error
-
-  virtual void internal_error(const int message_type, std::ofstream *output_stream,
-                              const char *format, va_list &args);
-  //- write out a debug/info/error/warning message
-
-  int print_error(const char *format, ... ) PRINTF_FORMAT(2,3);
-  //- write out an error message
-
-  int print_warning(const char *format, ... ) PRINTF_FORMAT(2,3);
-  //- write out a warning message
-
-  int print_info(const char *format, ... ) PRINTF_FORMAT(2,3);
-  //- write out an info message
-
-  int print_debug( const char *format, ... ) PRINTF_FORMAT(2,3);
-  //- write out a debug message
-
-  void print_diagnostic(const char *format, ... ) PRINTF_FORMAT(2,3);
-  //- write out a diagnostic message
-
-  int reset_error_count(int value = 0);
-  //- Sets the errorCount variable to 0;
-  //- Returns current value of variable.
-
-  int error_count();
-  //- Returns the value of the errorCount variable;
-  //- This errorCount variable is incremented only if print_error is called;
-  //- there is not a public  interface to only set the flag.
-  //- My reasoning for that is that there should be
-  //- some notification of an error so that the
-  //- user can figure out why this function returns TRUE.
-
-  int reset_warning_count(int value = 0);
-  //- Sets the warningCount variable to 0;
-  //- Returns current value of variable.
-
-  int warning_count();
-  //- Returns the value of the warningCount variable;
-  //- This warningCount variable is incremented only if print_warning is called;
-  //- there is not a public  interface to only set the flag.
-  //- My reasoning for that is that there should be
-  //- some notification of an error so that the
-  //- user can figure out why this function returns TRUE.
-
-  void output_debug_information(int from=1, int to=-1, int step=1);
-  void output_debug_information(CubitString &match);
-  void output_logging_information();
-
-  static char* get_logging_file_setting();
-  static void set_logging_file_setting(const char* file);
-  static void set_error_logging_file_setting(const char* file, CubitBoolean resume_flag = CUBIT_FALSE);
-
-  static void initialize_settings();
 
   static void set_message_handler(CubitMessageHandler *handler);
   static CubitMessageHandler* get_message_handler();
 
 }; // End of Class CubitMessage
-
-inline int
-CubitMessage::debug_flag(const int index)
-{return debugFlag[index].setting;}
-
-inline void
-CubitMessage::debug_flag(const int index, const int flag)
-{debugFlag[index].setting = flag;}
-
-inline bool
-CubitMessage::get_info_flag()
-{return !!infoFlag;}
-
-inline void
-CubitMessage::set_info_flag(bool flag)
-{infoFlag = flag;}
-
-inline bool
-CubitMessage::get_warning_flag()
-{return !!warningFlag;}
-
-inline void
-CubitMessage::set_warning_flag(bool flag)
-{warningFlag = flag;}
-
-inline bool
-CubitMessage::get_error_flag()
-{return !!errorFlag;}
-
-inline void
-CubitMessage::set_error_flag(bool flag)
-{errorFlag = flag;}
-
-inline bool
-CubitMessage::get_diagnostic_flag()
-{return !!diagnosticFlag;}
-
-inline void
-CubitMessage::set_diagnostic_flag(bool flag)
-{diagnosticFlag = flag;}
 
 #endif
 
