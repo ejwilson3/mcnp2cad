@@ -84,7 +84,7 @@ public:
   //! Returns the value of the current item.
   /*! \return The value of the current item. If the list is empty, X(0) is returned.
   */
-  X get () const;
+  X get() const;
  
   //! Returns the current value, then advances the current position by one.
   /*! If the current position is at the end of the list, the function will
@@ -122,6 +122,7 @@ public:
   void copy_to(X *other_array);
 
 private:
+
   void lengthen_list(int by_how_much = DLI_COUNT_INCREMENT,
                      double by_what_factor = DLI_COUNT_FACTOR );
     //- Makes the array bigger. Multiply current size 
@@ -201,6 +202,7 @@ template <class X> inline int DLIList<X>::where_is_item (X item) const
 }
 //- Append this new_item to the list if it doesn't already exist in it.
 //- Make sure the index is unchanged.
+
 template <class X> inline CubitBoolean DLIList<X>::append_unique(X new_item)
 {
     // Append new_item, if it isn't already there.
@@ -211,7 +213,6 @@ template <class X> inline CubitBoolean DLIList<X>::append_unique(X new_item)
   }
   return CUBIT_FALSE;
 }
-
 
 //FROM DLILIST.CPP
 

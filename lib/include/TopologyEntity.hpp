@@ -31,9 +31,6 @@ class CUBIT_GEOM_EXPORT TopologyEntity: public ModelEntity
 {
 public :
 
-  static const char* get_class_name()
-     { return "TopologyEntity"; }
-  
   CubitStatus ref_volumes(DLIList<RefVolume*>& ref_volume_list);
 
   Body *body();
@@ -54,7 +51,6 @@ public :
     //- the requested list - e.g., if ref_edges is called on a RefEdge
     //- object. 
     //-
-    //this
 
   int num_ref_faces();
   int num_ref_edges();

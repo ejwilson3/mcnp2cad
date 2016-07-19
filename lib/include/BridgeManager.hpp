@@ -24,14 +24,6 @@ public:
   BridgeManager(TopologyEntity* owner);
   virtual ~BridgeManager();
 
-  virtual CubitStatus remove_bridge(TopologyBridge* bridge );
-
-  virtual CubitStatus swap_bridge( TopologyBridge* old_tb, 
-                                   TopologyBridge* new_tb,
-                                   bool reversed );
-
-  virtual void notify_reversed( TopologyBridge* bridge );
-
 private:
 
   TopologyEntity* const topologyEntity;

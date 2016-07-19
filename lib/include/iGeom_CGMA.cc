@@ -28,15 +28,8 @@
 # include "config.h"
 #endif
 
-#ifdef ITAPS_SHIM
-# include "iGeom_private.h"
-# include "iGeom_binding.h"
-# include "CGM_iGeom.h"
-# define ITAPS_API static
-#else
 # include "iGeom.h"
 # define ITAPS_API
-#endif
 
 const bool debug = false;
 

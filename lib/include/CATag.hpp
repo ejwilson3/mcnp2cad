@@ -27,11 +27,6 @@
 #include "iBase.h"
 #include "CubitAttrib.hpp"
 
-#ifdef ITAPS_SHIM
-typedef struct iGeom_Instance_Private *iGeom_Instance;
-# include "iGeom_binding.h"
-#endif
-
 #define ARRAY_IN_DECL(a, b) \
   a const* b, const int b ## _size  
 
