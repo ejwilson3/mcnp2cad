@@ -883,7 +883,7 @@ protected:
     iBase_EntityHandle rec;
     
     if( facet ){
-      iGeom_createCylinder( 2.0 * world_size, radius1, radius2, &rec, &igm_result );
+      iGeom_createCylinder( 2.0 * world_size + length / 2.0, radius1, radius2, &rec, &igm_result );
     }
     else{
       iGeom_createCylinder( length, radius1, radius2, &rec, &igm_result );
